@@ -53,9 +53,12 @@ class FirmaViewModel: ObservableObject {
                 let response = try JSONDecoder().decode(EnheterResponse.self, from: data)
                 let results = Array(response._embedded.enheter.prefix(10))
                 self.cache[query.lowercased()] = results
-                let filtrerteResultat = results.sorted {
+                var filtrerteResultat = results.sorted {
                     $0.navn.lowercased().hasPrefix(query.lowercased()) &&
                    !$1.navn.lowercased().hasPrefix(query.lowercased())
+                }
+                filtrerteResultat = filtrerteResultat.filter {
+                    $0.navn.lowercased().hasPrefix(query.lowercased())
                 }
                 self.forslag = filtrerteResultat
             } catch {
