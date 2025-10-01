@@ -43,7 +43,7 @@ class FirmaViewModel: ObservableObject {
                 return
             }
         
-        let urlString = "https://data.brreg.no/enhetsregisteret/api/enheter?navn=\(query)&\(maks_antall_sok)&\(sorter_antall_ansatte)"
+        let urlString = "https://data.brreg.no/enhetsregisteret/api/enheter?navn=\(query)&navnMetodeForSoek=FORTLOEPENDE&\(maks_antall_sok)&\(sorter_antall_ansatte)"
         print("**URL: \(urlString) **")
         guard let url = URL(string: urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!) else { return }
         
