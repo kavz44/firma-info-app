@@ -49,11 +49,20 @@ class FirmaViewModel: ObservableObject {
         print(encodedQuery)
         let urlString = "https://data.brreg.no/enhetsregisteret/api/enheter?navn=\(encodedQuery)&navnMetodeForSoek=FORTLOEPENDE&\(maks_antall_sok)&\(sorter_antall_ansatte)"
         print("**URL: \(urlString) **")
-        guard let url = URL(string: urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!) else { return }
+        guard let url = URL(string: urlString) else {return}
         
         Task {
             do {
                 let (data, _) = try await URLSession.shared.data(from: url)
+                // DEBUGGING
+                    if let rawResponse = String(data: data, encoding: .utf8) {
+                        print("RAW RESPONSE:")
+                        print(rawResponse)
+                    } else {
+                        print("Kunne ikke konvertere data til tekst")
+                    }
+                
+                // DEBUGGING
                 let response = try JSONDecoder().decode(EnheterResponse.self, from: data)
                 let results = Array(response._embedded.enheter.prefix(10))
                 self.cache[query.lowercased()] = results
