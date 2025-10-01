@@ -43,7 +43,11 @@ class FirmaViewModel: ObservableObject {
                 return
             }
         
-        let urlString = "https://data.brreg.no/enhetsregisteret/api/enheter?navn=\(query)&navnMetodeForSoek=FORTLOEPENDE&\(maks_antall_sok)&\(sorter_antall_ansatte)"
+        // 2 linjene under vil fjerne valgte spesialtegn og endre til percentage encoding, så det ikke fører til feil ved kall til API
+        let allowedCharacterSet = CharacterSet(charactersIn: "!*'();:@&=+$,/?%#[] ").inverted
+        let encodedQuery = query.addingPercentEncoding(withAllowedCharacters: allowedCharacterSet) ?? ""
+        print(encodedQuery)
+        let urlString = "https://data.brreg.no/enhetsregisteret/api/enheter?navn=\(encodedQuery)&navnMetodeForSoek=FORTLOEPENDE&\(maks_antall_sok)&\(sorter_antall_ansatte)"
         print("**URL: \(urlString) **")
         guard let url = URL(string: urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!) else { return }
         
