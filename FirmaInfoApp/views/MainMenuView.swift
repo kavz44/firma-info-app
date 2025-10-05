@@ -56,7 +56,7 @@ struct SearchSheetView: View {
                 .padding(.vertical)
                 
 
-                TextField("Søk her ...", text: $query)
+                TextField("Søk her ... (UNDER CONSTRUCTION)", text: $query)
                     .padding()
                     .background(Color(.systemGray6))
                     .cornerRadius(20)
