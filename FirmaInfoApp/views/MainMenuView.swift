@@ -11,54 +11,75 @@ import SwiftUI
 struct MainMenuView: View {
     @StateObject private var viewModel = FirmaViewModel()
     
+    
     var body: some View {
         
-        NavigationStack{
-            ZStack{
-                Image("backround")
-                    .resizable()
-                    .scaledToFill()
-                    .ignoresSafeArea()
+      
+        ZStack{
+            Image("backround")
+                .resizable()
+                .scaledToFill()
+                .ignoresSafeArea()
+        }
+        .sheet(isPresented: .constant(true)) {
+            SearchSheetView(query: $viewModel.query, forslag: viewModel.forslag)
+                .presentationDetents([.height(160), .medium, .large])
+                .presentationDragIndicator(.visible)
+                .presentationBackgroundInteraction(.enabled(upThrough: .medium))
+                .interactiveDismissDisabled(true)
+                //.presentationBackground(.regularMaterial)
                 
-                if (!viewModel.forslag.isEmpty) {
-                    
-                    ScrollView{
-                        VStack(alignment: .leading){
-                            ForEach(viewModel.forslag) {firma in
-                                Button(action: {
-                                    viewModel.velgForslag(firma: firma)
-                                }){
-                                    VStack(alignment: .leading){
-                                        if #available(iOS 26.0, *) {
-                                            Text("Firmanavn: \(firma.navn)")
-                                                .glassEffect()
-                                        } else {
-                                            // Fallback on earlier versions
-                                            
-                                            // Text("Orgnr: \(firma.orgnummer)")
-                                            // if let adresse = firma.forretningsadresse?.poststed {
-                                            // Text("Adresse: \(adresse)")
-                                            // }
-                                        }
-                                    }
-                                    
-                                }
-                                .buttonStyle(PlainButtonStyle())
-                            }
+        }
+                                
+    }
+}
+
+// TODO: Flytt til egen fil når ferdig testa
+struct SearchSheetView: View {
+    @Binding var query: String
+    let forslag: [Firma]
+    
+    var filteredForslag: [Firma] {
+        if query.isEmpty { return forslag }
+        return forslag.filter { $0.navn.lowercased().contains(query.lowercased()) }
+    }
+    
+    var body: some View {
+        NavigationStack {
+            VStack(alignment: .leading) {
+                Spacer()
+                Text("Hvilket selskap skal søkes opp?")
+                .frame(maxWidth: .infinity, alignment: .center)
+                .font(.title3)
+                .fontDesign(.rounded)
+                .fontWeight(.semibold)
+                .padding(.vertical)
+                
+
+                TextField("Søk her ...", text: $query)
+                    .padding()
+                    .background(Color(.systemGray6))
+                    .cornerRadius(20)
+                    .padding(.horizontal)
+                
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 8) {
+                        ForEach(filteredForslag) { firma in
                             
+                            Button(action: {print("her ble \(firma.navn) trykket på!")}) {
+                                Label(firma.navn, systemImage: "building.2")
+                                    .padding(.horizontal, 16)
+                                    .padding(.vertical, 8)
+                                    .background(Color.blue.opacity(0.2))
+                                    .foregroundStyle(.white)
+                                    .cornerRadius(20)
+                            }
                         }
-                        
                     }
-                    
-                    
+                    .padding(.horizontal)
                 }
                 
-            }
-        } // navigationStack end
-        .searchable(text: $viewModel.query)
-        .searchSuggestions{
-            ForEach(viewModel.forslag) { firma in
-                Text("\(firma.navn)")
+                
             }
             
         }
