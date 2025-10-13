@@ -66,6 +66,7 @@ class FirmaViewModel: ObservableObject {
                 let response = try JSONDecoder().decode(EnheterResponse.self, from: data)
                 let results = Array(response._embedded.enheter.prefix(10))
                 self.cache[query.lowercased()] = results
+                // Kan optimaliseres! kun enten sorted eller filter trengs her.
                 var filtrerteResultat = results.sorted {
                     $0.navn.lowercased().hasPrefix(query.lowercased()) &&
                    !$1.navn.lowercased().hasPrefix(query.lowercased())
