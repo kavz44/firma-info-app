@@ -22,12 +22,12 @@ struct RegnskapDetailView: View {
                 ForEach(regnskap.indices, id: \.self) { index in
                     let r = regnskap[index]
                     VStack(alignment: .leading, spacing: 8) {
-                        Text("Regnskapsårr: \(r.regnskapsperiode.fraDato.prefix(4))")
-                        Text("Valuta: \(r.valuta)")
-                        Text("Sum eiendeler: \(r.eiendeler.sumEiendeler)")
-                        Text("Sum egenkapital: \(r.egenkapitalGjeld.egenkapital.sumEgenkapital)")
-                        Text("Sum gjeld: \(r.egenkapitalGjeld.gjeldOversikt.sumGjeld)")
-                        Text("Årsresultat: \(r.resultatregnskapResultat.aarsresultat)")
+                        Text(verbatim: "Regnskapsår: \(r.regnskapsperiode.fraDato.prefix(4))")
+                        Text(verbatim: "Valuta: \(r.valuta ?? "ukjent")")
+                        Text(verbatim: "Sum eiendeler: \(r.eiendeler.sumEiendeler ?? 0)")
+                        Text(verbatim: "Sum egenkapital: \(r.egenkapitalGjeld.egenkapital.sumEgenkapital ?? 0)")
+                        Text(verbatim: "Sum gjeld: \(r.egenkapitalGjeld.gjeldOversikt.sumGjeld ?? 0)")
+                        Text(verbatim: "Årsresultat: \(r.resultatregnskapResultat.aarsresultat ?? 0)")
                     }
                     .padding()
                     .background(Color(.systemGray6))
