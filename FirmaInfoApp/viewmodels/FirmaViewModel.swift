@@ -54,13 +54,14 @@ class FirmaViewModel: ObservableObject {
         Task {
             do {
                 let (data, _) = try await URLSession.shared.data(from: url)
+                print("data hentet fra API")
                 // DEBUGGING
-                    if let rawResponse = String(data: data, encoding: .utf8) {
-                        print("RAW RESPONSE:")
-                        print(rawResponse)
-                    } else {
-                        print("Kunne ikke konvertere data til tekst")
-                    }
+//                    if let rawResponse = String(data: data, encoding: .utf8) {
+//                        print("RAW RESPONSE:")
+//                        print(rawResponse)
+//                    } else {
+//                        print("Kunne ikke konvertere data til tekst")
+//                    }
                 
                 // DEBUGGING
                 let response = try JSONDecoder().decode(EnheterResponse.self, from: data)

@@ -10,6 +10,7 @@ import SwiftUI
 
 struct MainMenuView: View {
     @StateObject private var viewModel = FirmaViewModel()
+    @StateObject private var regnskapViewModel = RegnskapViewModel()
     
     
     var body: some View {
@@ -22,7 +23,7 @@ struct MainMenuView: View {
                 .ignoresSafeArea()
         }
         .sheet(isPresented: .constant(true)) {
-            SearchSheetView(query: $viewModel.query, forslag: viewModel.forslag)
+            SearchSheetView(query: $viewModel.query, forslag: viewModel.forslag, regnskapViewModel: regnskapViewModel)
                 .presentationDetents([.height(160), .medium, .large])
                 .presentationDragIndicator(.visible)
                 .presentationBackgroundInteraction(.enabled(upThrough: .medium))
@@ -38,6 +39,7 @@ struct MainMenuView: View {
 struct SearchSheetView: View {
     @Binding var query: String
     let forslag: [Firma]
+    @ObservedObject var regnskapViewModel: RegnskapViewModel
     
     var filteredForslag: [Firma] {
         if query.isEmpty { return forslag }
@@ -66,7 +68,14 @@ struct SearchSheetView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         ForEach(filteredForslag) { firma in
                             
-                            Button(action: {print("her ble \(firma.navn) trykket på!")}) {
+                            Button(action: {
+                                print("her ble \(firma.navn) trykket på!")
+                                print("orgnr: \(firma.orgnummer)")
+                                
+                                // Henter regnskapsdata
+                                regnskapViewModel.hentRegnskapsdata(orgnr: firma.orgnummer, organisasjonsform: firma.organisasjonsform.kode )
+                                
+                            }) {
                                 Label(firma.navn, systemImage: "building.2")
                                     .padding(.horizontal, 16)
                                     .padding(.vertical, 8)

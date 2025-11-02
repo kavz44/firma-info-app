@@ -12,7 +12,7 @@ struct Firma: Identifiable, Codable, Sendable {
     var id: String {orgnummer} // Bruker orgnummer som id fordi alle er unike
     let navn: String
     let orgnummer: String
-    let organisasjonsform: OrgForm?
+    let organisasjonsform: OrgForm
     let forretningsadresse: Adresse?
     let stiftelsesdato: String?
     let sisteInnsendteAarsregnskap: String? // årstall
