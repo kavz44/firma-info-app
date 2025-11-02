@@ -13,7 +13,7 @@ struct RegnskapDetailView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("(UNDER CONSTRUCTION) Noen tall for \(firmaNavn)")
+            Text("(UNDER CONSTRUCTION) \nNoen tall for \(firmaNavn)")
                 .font(.title2)
                 .fontWeight(.bold)
                 .padding(.bottom)
