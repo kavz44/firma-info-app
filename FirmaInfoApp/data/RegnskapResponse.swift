@@ -45,84 +45,84 @@ struct Regnskapsprinsipper: Codable {
 }
 
 struct EgenkapitalGjeld: Codable {
-    let sumEgenkapitalGjeld: Double
+    let sumEgenkapitalGjeld: Int
     let egenkapital: Egenkapital
     let gjeldOversikt: GjeldOversikt
 }
 
 struct Egenkapital: Codable {
-    let sumEgenkapital: Double
+    let sumEgenkapital: Int
     let opptjentEgenkapital: OpptjentEgenkapital
     let innskuttEgenkapital: InnskuttEgenkapital
 }
 
 struct OpptjentEgenkapital: Codable {
-    let sumOpptjentEgenkapital: Double
+    let sumOpptjentEgenkapital: Int?
 }
 
 struct InnskuttEgenkapital: Codable {
-    let sumInnskuttEgenkaptial: Double
+    let sumInnskuttEgenkaptial: Int
 }
 
 struct GjeldOversikt: Codable {
-    let sumGjeld: Double
+    let sumGjeld: Int
     let kortsiktigGjeld: KortsiktigGjeld
     let langsiktigGjeld: LangsiktigGjeld
 }
 
 struct KortsiktigGjeld: Codable {
-    let sumKortsiktigGjeld: Double
+    let sumKortsiktigGjeld: Int
 }
 
 struct LangsiktigGjeld: Codable {
-    let sumLangsiktigGjeld: Double
+    let sumLangsiktigGjeld: Int
 }
 
 struct Eiendeler: Codable {
-    let sumEiendeler: Double
+    let sumEiendeler: Int
     let omloepsmidler: Omloepsmidler
     let anleggsmidler: Anleggsmidler
 }
 
 struct Omloepsmidler: Codable {
-    let sumOmloepsmidler: Double
+    let sumOmloepsmidler: Int
 }
 
 struct Anleggsmidler: Codable {
-    let sumAnleggsmidler: Double
+    let sumAnleggsmidler: Int
 }
 
 struct ResultatregnskapResultat: Codable {
-    let ordinaertResultatFoerSkattekostnad: Double
-    let aarsresultat: Double
+    let ordinaertResultatFoerSkattekostnad: Int
+    let aarsresultat: Int
     let finansresultat: Finansresultat
     let driftsresultat: Driftsresultat
 }
 
 struct Finansresultat: Codable {
-    let nettoFinans: Double
+    let nettoFinans: Int
     let finansinntekt: Finansinntekt
     let finanskostnad: Finanskostnad
 }
 
 struct Finansinntekt: Codable {
-    let sumFinansinntekter: Double
+    let sumFinansinntekter: Int
 }
 
 struct Finanskostnad: Codable {
-    let sumFinanskostnad: Double
+    let sumFinanskostnad: Int
 }
 
 struct Driftsresultat: Codable {
-    let driftsresultat: Double
+    let driftsresultat: Int
     let driftsinntekter: Driftsinntekter
     let driftskostnad: Driftskostnad
 }
 
 struct Driftsinntekter: Codable {
-    let sumDriftsinntekter: Double
+    let sumDriftsinntekter: Int
 }
 
 struct Driftskostnad: Codable {
-    let sumDriftskostnad: Double
+    let sumDriftskostnad: Int
 }

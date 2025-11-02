@@ -41,6 +41,8 @@ struct SearchSheetView: View {
     let forslag: [Firma]
     @ObservedObject var regnskapViewModel: RegnskapViewModel
     
+   
+    
     var filteredForslag: [Firma] {
         if query.isEmpty { return forslag }
         return forslag.filter { $0.navn.lowercased().contains(query.lowercased()) }
@@ -67,15 +69,20 @@ struct SearchSheetView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 8) {
                         ForEach(filteredForslag) { firma in
-                            
-                            Button(action: {
-                                print("her ble \(firma.navn) trykket på!")
-                                print("orgnr: \(firma.orgnummer)")
-                                
-                                // Henter regnskapsdata
-                                regnskapViewModel.hentRegnskapsdata(orgnr: firma.orgnummer, organisasjonsform: firma.organisasjonsform.kode )
-                                
-                            }) {
+                            NavigationLink(destination: {
+                                if let regnskap = regnskapViewModel.regnskapsData[firma.orgnummer] {
+                                    RegnskapDetailView(firmaNavn: firma.navn, regnskap: regnskap)
+                                } else {
+                                    Text("Henter regnskapsdata…")
+                                        .task {
+                                            regnskapViewModel.hentRegnskapsdata(
+                                                orgnr: firma.orgnummer,
+                                                organisasjonsform: firma.organisasjonsform.kode
+                                            )
+                                        }
+                                }
+                            })
+                            {
                                 Label(firma.navn, systemImage: "building.2")
                                     .padding(.horizontal, 16)
                                     .padding(.vertical, 8)
@@ -83,6 +90,7 @@ struct SearchSheetView: View {
                                     .foregroundStyle(.white)
                                     .cornerRadius(20)
                             }
+                            
                         }
                     }
                     .padding(.horizontal)

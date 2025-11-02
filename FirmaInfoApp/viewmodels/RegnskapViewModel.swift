@@ -10,7 +10,7 @@ import Combine
 
 class RegnskapViewModel: ObservableObject {
     // ide: lagre data i dict med orgnr som nokkel, en slags mellomlagring av tidligere søk.
-    @Published var regnskapsData: [String: RegnskapResponse] = [:]
+    @Published var regnskapsData: [String: [RegnskapResponse]] = [:]
     
     // alle koder:  AAFY, ADOS, ANNA, ANS, AS, ASA, BA, BBL, BEDR, BO, BRL, DA, ENK, EOFG, ESEK, FKF, FLI, FYLK, GFS, IKJP, IKS, KBO, KF, KIRK, KOMM, KS, KTRF, NUF, OPMV, ORGL, PERS, PK, PRE, SA, SAM, SE, SF, SPA, STAT, STI, SÆR, TVAM, UTLA, VPFO
 
@@ -53,7 +53,7 @@ class RegnskapViewModel: ObservableObject {
                 print("data hentet fra API")
                 
                 
-                let response = try JSONDecoder().decode(RegnskapResponse.self, from: data)
+                let response = try JSONDecoder().decode([RegnskapResponse].self, from: data)
                 
                 // lagre i cachen
                 await MainActor.run {
