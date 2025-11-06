@@ -8,7 +8,7 @@ Bygget i **Swift** for iOS-enheter.
 
 ---
 
-## Et par screenshots fra progresjonen så langt  
+## Et par screenshots fra progress så langt  
 
 ### Hjemmesiden / søkefelt  
 <img height="400" alt="image" src="https://github.com/user-attachments/assets/45159b8b-91a7-424b-91bb-8bc8e416cfc8" />
